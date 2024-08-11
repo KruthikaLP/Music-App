@@ -1,0 +1,35 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Playlist</title>
+    <link rel="stylesheet" href="createplay.css">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add Playlist</h1>
+        <form action="/addplaylist" method="post">
+            <div class="form-group">
+                <label for="name">Playlist Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <!-- Dynamic content rendering with Thymeleaf -->
+                <!-- ${songslist} is from playlistcontroller model.addAttribute("songslist", songslist); -->
+                <div th:each="song : ${songsslist}" class="checkbox-group">
+                    <input type="checkbox" th:name="songs" th:value="${song.id}" id="song_${song.id}">
+                    <label th:for="${song.id}" th:text="${song.name}"></label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Add Playlist">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

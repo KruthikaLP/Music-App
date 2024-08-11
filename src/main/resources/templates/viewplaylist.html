@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist Table</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .table-container {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 2s ease-in;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideIn 1s ease-out forwards;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+            animation: fadeInUp 1s 0.5s forwards;
+        }
+
+        td {
+            background-color: #fff;
+            animation: fadeInUp 1s 0.7s forwards;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover td {
+            background-color: #e2e6ea;
+            transform: scale(1.02);
+        }
+
+        .songs-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .songs-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .songs-list span {
+            margin-right: 15px;
+            font-weight: 500;
+            color: #343a40;
+            animation: bounce 1s ease;
+        }
+
+        audio {
+            margin-left: 10px;
+            width: 200px;
+            transition: transform 0.3s ease;
+        }
+
+        audio:hover {
+            transform: scale(1.1) rotate(3deg);
+        }
+
+        .add-song-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .add-song-button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" class="form-control" placeholder="Search for a song or playlist..." id="searchInput">
+        </div>
+        <div class="table-container">
+            <button class="add-song-button" onclick="window.location.href='/createplaylist'">Add PlayList</button>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Songs</th>
+                    </tr>
+                </thead>
+                <tbody id="playlistTableBody">
+                    <tr th:each="pl : ${plist}">
+                        <td th:text="${pl.id}"></td>
+                        <td th:text="${pl.name}"></td>
+                        <td>
+                            <ul class="songs-list">
+                                <!-- Assuming pl.songs is a correct name in your song entity -->
+                                <li th:each="s : ${pl.songs}">
+                                    <span th:text="${s.name}"></span>
+                                    <audio controls>
+                                        <source th:src="${s.link}" type="audio/mpeg">
+                                    </audio>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS for Search Functionality -->
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchValue = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#playlistTableBody tr');
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                let isMatch = false;
+                
+                cells.forEach(cell => {
+                    if (cell.textContent.toLowerCase().includes(searchValue)) {
+                        isMatch = true;
+                    }
+                });
+                
+                row.style.display = isMatch ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

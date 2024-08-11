@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Songs List</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="tyl.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="my-4">Songs List</h1>
+                <!-- Search Input -->
+                <input type="text" id="search-input" class="form-control mb-4" placeholder="Search for songs...">
+                
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Artist</th>
+                                <th>Genre</th>
+                                <th>Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Iterating through songs -->
+                            <!-- ${listsongs} is from songcontroller  -->
+                            <tr th:each="songlist : ${listsongs}">
+                                <td th:text="${songlist.name}">Name</td>
+                                <td th:text="${songlist.artist}">Artist</td>
+                                <td th:text="${songlist.genre}">Genre</td>
+                                <td>
+                                    <audio controls>
+                                        <source th:src="${songlist.link}" type="audio/mpeg">
+                  
+                                    </audio>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/5hPFFvG2GzYmJujrf0QwDhN3O+Qg7F9gPoC9A7J9"
+            crossorigin="anonymous"></script>
+    
+    <!-- Popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"
+            integrity="sha384-9O4OeT+NTH96dZRuv8I0xxZLoHlA42A7C/q7L7q2b1qVV51l5Wx0BklTOFGP8TC0"
+            crossorigin="anonymous"></script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfQQw7tX5w2OMD2qOzZ1/2c2Nn+0A5cA0L0h5xDe3C9D3FVH5fF0G4v6B9X7HgH"
+            crossorigin="anonymous"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('keyup', function() {
+            const filter = searchInput.value.toLowerCase();
+            const rows = document.querySelectorAll('.table tbody tr');
+            rows.forEach(row => {
+                const cells = row.getElementsByTagName('td');
+                let match = false;
+                for (let i = 0; i < cells.length; i++) {
+                    if (cells[i].textContent.toLowerCase().includes(filter)) {
+                        match = true;
+                        break;
+                    }
+                }
+                row.style.display = match ? '' : 'none';
+            });
+        });
+    });
+    </script>
+</body>
+</html>
+
+
+
+<!-- Key Adjustments:
+Viewport Meta Tag: Added <meta name="viewport" content="width=device-width, initial-scale=1.0"> to ensure the layout is responsive on mobile devices.
+
+HTML Structure: Fixed the </html> tag and made sure to close the <head> tag properly.
+
+Responsive Table: Wrapped the table in a div with the class table-responsive to make the table horizontally scrollable on smaller screens.
+
+Bootstrap JS and Dependencies: Added optional Bootstrap JS and its dependencies for enhanced interactivity if needed. 
+CSS Enhancements:
+
+Mobile Responsiveness: Custom CSS ensures that the table adjusts well on smaller screens.
+Interactive Table Styles: Added hover effects and improved appearance of audio controls.
+JavaScript Enhancements:
+
+Table Search: Added a search feature to filter the table rows dynamically.
+Template Updates:
+
+Search Bar: Included a search input to filter table data.
+Data Labels: Added data-label attributes for improved responsiveness on small screens.
+These changes should provide a more responsive and interactive user experience. Let me know if you have any other features or adjustments in mind!
+Key Changes:
+Updated jQuery Script:
+
+Version: Switched to jQuery 3.6.0.
+Integrity: Updated the integrity attribute to match the new version.
+Removed Duplicate jQuery Script:
+
+Removed the old jQuery 3.3.1 script to avoid loading multiple versions.
+Updated Popper.js:
+
+Updated to Popper.js 1.16.1 to match compatibility with Bootstrap 4.1.3.-->

@@ -1,0 +1,81 @@
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Explore Songs</title>
+	    <!-- Bootstrap CSS -->
+	    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	    <!-- Custom Styles -->
+	    <style>
+	        body {
+	            background-color: #f8f9fa;
+	            font-family: 'Arial', sans-serif;
+	            display: flex;
+	            justify-content: center;
+	            align-items: center;
+	            height: 100vh;
+	            margin: 0;
+	        }
+	
+	        .explore-link-container {
+	            text-align: center;
+	        }
+	
+	        .explore-link {
+	            display: inline-block;
+	            padding: 15px 30px;
+	            font-size: 18px;
+	            font-weight: 600;
+	            color: #ffffff;
+	            background-color: #007bff;
+	            text-decoration: none;
+	            border-radius: 50px;
+	            transition: all 0.3s ease;
+	            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	            position: relative;
+	            overflow: hidden;
+	        }
+	
+	        .explore-link::before {
+	            content: '';
+	            position: absolute;
+	            top: 50%;
+	            left: 50%;
+	            width: 300%;
+	            height: 300%;
+	            background: rgba(255, 255, 255, 0.3);
+	            border-radius: 50%;
+	            transition: all 0.3s ease;
+	            transform: translate(-50%, -50%) scale(0);
+	            z-index: 0;
+	        }
+	
+	        .explore-link:hover::before {
+	            transform: translate(-50%, -50%) scale(1);
+	        }
+	
+	        .explore-link:hover {
+	            background-color: #0056b3;
+	            transform: translateY(-5px);
+	            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+	        }
+	
+	        .explore-link span {
+	            position: relative;
+	            z-index: 1;
+	        }
+	    </style>
+	</head>
+	<body>
+	    <div class="explore-link-container">
+	        <a href="/exploresongs" class="explore-link">
+	            <span>Explore songs here!!!</span>
+	        </a>
+	    </div>
+	    <!-- Bootstrap JS and dependencies -->
+	    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	</body>
+	</html>

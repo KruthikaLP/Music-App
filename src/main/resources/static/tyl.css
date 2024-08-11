@@ -1,0 +1,54 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Responsive Table */
+.table-responsive {
+    margin-top: 20px;
+}
+
+.table thead th {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Custom Styling for Audio Controls */
+.audio-controls {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 576px) {
+    .table thead {
+        display: none; /* Hide table headers on small screens */
+    }
+    .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+    }
+    .table tr {
+        margin-bottom: 15px;
+        border-bottom: 2px solid #ddd;
+    }
+    .table td {
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        text-align: left;
+    }
+}
